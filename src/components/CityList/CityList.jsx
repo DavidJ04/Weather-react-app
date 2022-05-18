@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 //Importación de Grid
-import { Grid } from '@mui/material'
+import { Grid, ListItem, List } from '@mui/material'
 import CityInfo from './../CityInfo'
 import Weather from './../Weather'
 
@@ -11,7 +11,7 @@ const renderCityAndCountry = eventOnClickCity => CityAndCountry => {
       const { city , country } = CityAndCountry
       
       return(
-      <li key={city} onClick={eventOnClickCity}>
+      <ListItem key={city} onClick={eventOnClickCity} button  > 
 
          <Grid container
                justifyContent="center"
@@ -32,7 +32,7 @@ const renderCityAndCountry = eventOnClickCity => CityAndCountry => {
 
          </Grid>
          
-      </li>
+      </ListItem>
     
       ) 
 
@@ -42,11 +42,11 @@ const renderCityAndCountry = eventOnClickCity => CityAndCountry => {
 //ul: tag html para listas no ordenadas
 const CityList = ({cities, onClickCity}) => {
   return (
-    <ul>
+    <List>
         {
         cities.map(CityAndCountry => renderCityAndCountry(onClickCity)(CityAndCountry)) 
         }
-    </ul>
+    </List>
   )
 }
 

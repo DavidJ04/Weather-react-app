@@ -14,7 +14,7 @@ test("CityList renders", async () => {
  
 const { findAllByRole } = render(<CityList cities={cities} onClickCity={() => {}}/>)
 
-const items = await findAllByRole("listitem")
+const items = await findAllByRole("button")
 
 //Cantidad de items del array cities
 expect(items).toHaveLength(4)
@@ -30,7 +30,7 @@ const fnClickOnItem = jest.fn()
 
 const { findAllByRole } = render(<CityList cities={cities} onClickCity={fnClickOnItem}/>)
 
-const items = await findAllByRole("listitem")
+const items = await findAllByRole("button")
 
 //Ahora, para simular una acción, se va a utilizar fireEvent
 //fireEvent es parte de la libreria testing library

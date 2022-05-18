@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Grid from '@mui/material'
+import { Grid } from '@mui/material'
 import WelcomePage from './pages/WelcomePage'
 import MainPage from './pages/MainPage'
 import CityPage from './pages/CityPage'
@@ -14,7 +14,7 @@ const App = () => {
         <Grid container
             justifyContent="center"
             direction="row">
-            <Grid item sm={10}>
+            <Grid item xs={12} sm={11} md={10} lg={8}>
                 <Router>
                     <Routes>
                         <Route path="/" element={<WelcomePage />} />
