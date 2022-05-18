@@ -1,17 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-const CityPage = props => {
+const CityPage = () => {
   return (
     <div>
-   <Link to="/main">
-      Volver a Main
-   </Link>
-</div>
+      City <br></br>
+      <Link to="/main">
+        Volver a Main
+      </Link>
+    </div>
   )
 }
-
-CityPage.propTypes = {}
 
 export default CityPage
