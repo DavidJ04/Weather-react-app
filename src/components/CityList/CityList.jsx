@@ -19,12 +19,13 @@ const renderCityAndCountry = eventOnClickCity => CityAndCountry => {
          >
            <Grid item
            //8 columnas de sm en adelante, cuando la resolución sea menor a sm va a ocupar 12 columnas
-                 sm={8}>
+                 md={8}
+                 xs={12}>
            <CityInfo city={city} country={country}/>
            </Grid>
 
            <Grid item
-                md={4}
+                md={3}
                 xs={12}>
                 
            <Weather temperature={10} state="sunny"/>

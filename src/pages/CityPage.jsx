@@ -5,6 +5,7 @@ import WeatherDetails from '../components/WeatherDetails/WeatherDetails'
 import ForecastChart from '../components/ForecastChart'
 import Forecast from './../components/Forecast'
 import { Grid } from '@mui/material'
+import AppFrame from '../components/AppFrame'
 
 const forecastItemListExample = [
   { hour: 18, state: "cloud", temperature: 17, weekDay: "Jueves" },
@@ -61,8 +62,9 @@ const CityPage = () => {
   const forecastItemList = forecastItemListExample
   
   return (
+      <AppFrame>
       <Grid container justifyContent="space-around" direction="column" spacing={2}>
-        <Grid item container xs={12} justifyContent="center" alignItems="flex-end">
+        <Grid item container xs={12} justifyContent="center" alignItems="flex-end" marginTop={4}>
             <CityInfo city={city} country={country}/>
         </Grid>
         <Grid container item xs={12} justifyContent="center">
@@ -76,6 +78,7 @@ const CityPage = () => {
             <Forecast forecastItemList={forecastItemList}/>
         </Grid>
       </Grid>
+      </AppFrame>
   )
 }
 
