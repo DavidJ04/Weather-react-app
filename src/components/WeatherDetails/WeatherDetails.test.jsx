@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import WeatherDetails from "./WeatherDetails"
-import IconState, {validValues} from './../IconState'
+
 
 test("WeatherDetails render", async () => {
 

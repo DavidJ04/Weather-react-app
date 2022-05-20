@@ -1,6 +1,7 @@
 import React from 'react'
 //UseHistory: Es la versión antugua de useNavigate
 import { useNavigate } from 'react-router-dom'
+import AppFrame from './../components/AppFrame'
 import CityList from './../components/CityList'
 
 const cities = [
@@ -19,10 +20,9 @@ const MainPage = () => {
     }
 
   return (
-    <div>
-      <h2>Lista de ciudades</h2>
-      <CityList cities={cities} onClickCity={onClickHandler}/>
-    </div>
+    <AppFrame>
+         <CityList cities={cities} onClickCity={onClickHandler}/>
+    </AppFrame>
   )
 }
 
