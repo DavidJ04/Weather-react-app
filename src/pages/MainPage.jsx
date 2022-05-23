@@ -5,10 +5,10 @@ import AppFrame from './../components/AppFrame'
 import CityList from './../components/CityList'
 
 const cities = [
-  {city: "Puntarenas", country: "Costa Rica"},
-  {city: "Heredia", country: "Costa Rica"},
-  {city: "Cartago", country: "Costa Rica"},
-  {city: "Guanacaste", country: "Costa Rica"},
+  {city: "San Ramón", country: "Costa Rica", countryCode: "CR"},
+  {city: "Turrialba", country: "Costa Rica", countryCode: "CR"},
+  {city: "Alajuelita", country: "Costa Rica", countryCode: "CR"},
+  {city: "Desamparados", country: "Costa Rica", countryCode: "CR"},
 ]
 
 const MainPage = () => {

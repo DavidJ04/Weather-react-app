@@ -6,7 +6,7 @@ import '@testing-library/jest-dom/extend-expect'
 
 test("Weather render sunny", async () =>{
 //AAA
-const {findByRole} = render(<Weather temperature={10} state="sunny" />)
+const {findByRole} = render(<Weather temperature={10} state="rain" />)
 
 const temp = await findByRole("heading")
 

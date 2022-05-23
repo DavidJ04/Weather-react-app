@@ -4,27 +4,32 @@ import PropTypes from 'prop-types'
 //Utilizar iconos
 import { TiWeatherCloudy,
     TiWeatherSunny,
-    TiWeatherDownpour,
+    TiWeatherShower,
     TiWeatherSnow,
-    TiWeatherWindy
+    TiWeatherWindyCloudy,
+    TiWeatherStormy
 } from 'react-icons/ti'
 //Funciona para modificar los iconos
 //import { IconContext } from 'react-icons'
 
+// Thunderstorm    	 
+
 export const validValues = [
-"cloud",
-"sunny",
-"downpour",
+"clouds",
+"clear",
+"rain",
 "snow",
-"windy"
+"drizzle",
+"thunderstorm"
 ]
 
 const stateByName = {
-cloud: TiWeatherCloudy,
-sunny: TiWeatherSunny,
-downpour: TiWeatherDownpour,
+clouds: TiWeatherCloudy,
+clear: TiWeatherSunny,
+rain: TiWeatherShower,
 snow: TiWeatherSnow,
-windy: TiWeatherWindy
+drizzle: TiWeatherWindyCloudy,
+thunderstorm: TiWeatherStormy
 }
 
 const IconState = ({state}) => {

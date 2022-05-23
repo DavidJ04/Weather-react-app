@@ -4,11 +4,11 @@ import { render, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 
 const cities = [
-    {city: "Puntarenas", country: "Costa Rica"},
-    {city: "Heredia", country: "Costa Rica"},
-    {city: "Cartago", country: "Costa Rica"},
-    {city: "Guanacaste", country: "Costa Rica"},
-]
+    {city: "San Ramón", country: "Costa Rica", countryCode: "CR"},
+    {city: "Turrialba", country: "Costa Rica", countryCode: "CR"},
+    {city: "Alajuelita", country: "Costa Rica", countryCode: "CR"},
+    {city: "Desamparados", country: "Costa Rica", countryCode: "CR"},
+  ]
 
 test("CityList renders", async () => { 
  

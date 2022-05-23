@@ -52,8 +52,8 @@ const dataExample = [
 
 
 const CityPage = () => {
-  const city = "Buenos Aires"
-  const country = "Argentina"
+  const city = "San Ramón"
+  const country = "Costa Rica"
   const state = "sunny"
   const temperature = 20
   const humidity = 80
