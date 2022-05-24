@@ -1,12 +1,14 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import CityInfo from '../components/CityInfo'
 import Weather from './../components/Weather'
 import { useParams } from 'react-router-dom'
+import axios from 'axios'
 import WeatherDetails from '../components/WeatherDetails/WeatherDetails'
 import ForecastChart from '../components/ForecastChart'
 import Forecast from './../components/Forecast'
 import { Grid } from '@mui/material'
 import AppFrame from '../components/AppFrame'
+import moment from 'moment'
 
 
 const forecastItemListExample = [
@@ -55,18 +57,55 @@ const dataExample = [
 
 const CityPage = () => {
 
-  const params = useParams()
+  const [data, setData] = useState(null)
+  const [forecastItemList, setForecastItemList] = useState(null)
 
-  console.log([params])
+  //Toma los parametros que se estan enviando 
+  const { city, countryCode } = useParams()
 
-  const city = "San Ramón"
+  useEffect( () => {
+
+    const getForecast = async () => {
+
+    const appid = "45a95b44d7dda1599d68e3c6076c4327"
+    const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city},${countryCode}&appid=${appid}`
+
+    try {
+        const response = await axios.get(url)
+
+        console.log("data", data)
+
+        const daysAhead = [0,1,2,3,4,5]
+        const days = daysAhead.map(d => moment().add(d, 'd'))
+        const dataAux = days.map(d => {
+            return ({
+                dayHour: d.format('ddd'),
+                min: 10,
+                max: 30
+            })
+        })
+
+        setData(dataAux)
+        setForecastItemList(forecastItemListExample)
+
+    } catch (error) {
+        console.log(error)
+    }
+    
+}
+
+getForecast()
+
+  }, [data, forecastItemList])
+  
+  //const city = "San Ramón"
   const country = "Costa Rica"
   const state = "clear"
   const temperature = 20
   const humidity = 80
   const wind = 5
-  const data = dataExample
-  const forecastItemList = forecastItemListExample
+ // const data = dataExample
+ //const forecastItemList = forecastItemListExample
   
   return (
       <AppFrame>
@@ -79,10 +118,14 @@ const CityPage = () => {
             <WeatherDetails humidity={humidity} wind={wind}/>
         </Grid>
         <Grid item>
-            <ForecastChart data={data}/>
+           { 
+            data && <ForecastChart data={data}/>
+           }
         </Grid>
         <Grid item>
-            <Forecast forecastItemList={forecastItemList}/>
+            {
+             forecastItemList && <Forecast forecastItemList={forecastItemList}/>
+            }
         </Grid>
       </Grid>
       </AppFrame>

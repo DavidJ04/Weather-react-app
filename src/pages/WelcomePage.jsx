@@ -2,7 +2,7 @@ import React from 'react'
 import WelcomeScreen from '../components/WelcomeScreen/WelcomeScreen'
 import { Grid } from '@mui/material'
 import { IconContext } from 'react-icons'
-import { TiWeatherSunny } from 'react-icons/ti'
+import { GiAbstract010 } from 'react-icons/gi'
 import { Typography } from '@mui/material'
 import { Link } from '@mui/material'
 import { Link as RouterLink } from 'react-router-dom'
@@ -15,7 +15,7 @@ const WelcomePage = () => {
                       <Grid item container xs={12} justifyContent="center" alignItems="center">
                         <Grid item>
                            <IconContext.Provider value={{ size:"6em"}}>
-                             <TiWeatherSunny/>
+                             <GiAbstract010/>
                            </IconContext.Provider>  
                         </Grid>
                         <Grid item container direction="column" justifyContent="center" alignItems="center">
