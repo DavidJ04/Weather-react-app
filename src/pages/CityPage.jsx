@@ -3,12 +3,16 @@ import CityInfo from '../components/CityInfo'
 import Weather from './../components/Weather'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
+import convertUnits from 'convert-units'
 import WeatherDetails from '../components/WeatherDetails/WeatherDetails'
 import ForecastChart from '../components/ForecastChart'
 import Forecast from './../components/Forecast'
 import { Grid } from '@mui/material'
 import AppFrame from '../components/AppFrame'
+
 import moment from 'moment'
+//Permite establecer el idioma en español
+import 'moment/locale/es'
 
 
 const forecastItemListExample = [
@@ -71,22 +75,53 @@ const CityPage = () => {
     const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city},${countryCode}&appid=${appid}`
 
     try {
-        const response = await axios.get(url)
+        const { data } = await axios.get(url)
+
+        //Convierta a grados celsius
+        const toCelsius = (temp) => Number(convertUnits(temp).from("K").to("C").toFixed(0))
 
         console.log("data", data)
 
+        //Dias
         const daysAhead = [0,1,2,3,4,5]
         const days = daysAhead.map(d => moment().add(d, 'd'))
-        const dataAux = days.map(d => {
+        const dataAux = days.map(day => {
+
+            //Temperatura
+            const tempObjArray = data.list.filter(item => {
+                  const dayOfYear = moment.unix(item.dt).dayOfYear()
+                  return dayOfYear === day.dayOfYear()
+            })
+
+            //Se obtiene la temperatura
+            const temps = tempObjArray.map(item => item.main.temp)
+
+            //Dias
             return ({
-                dayHour: d.format('ddd'),
-                min: 10,
-                max: 30
+                dayHour: day.format('ddd'),
+                //Extrae los valores maximos y minimos
+                min: toCelsius(Math.min(...temps)),
+                max: toCelsius(Math.max(...temps))
             })
         })
 
         setData(dataAux)
-        setForecastItemList(forecastItemListExample)
+
+        //{ hour: 18, state: "clouds", temperature: 17, weekDay: "Jueves" }
+        const interval = [4, 8, 12, 16, 20, 24]
+
+        const forecastItemListAux = data.list
+        .filter((item, index) => interval.includes(index))
+        .map(item => {
+            return ({
+                hour: moment.unix(item.dt).hour(),
+                weekDay: moment.unix(item.dt).format('dddd'),
+                state: item.weather[0].main.toLowerCase(),
+                temperature: toCelsius(item.main.temp)
+            })
+        })
+       
+        setForecastItemList(forecastItemListAux)
 
     } catch (error) {
         console.log(error)

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import Clouds from 'vanta/dist/vanta.clouds.min'
+import Fog from 'vanta/dist/vanta.fog.min' 
 import * as THREE from 'three'
 
 const WelcomeScreen = ({ children }) => {
@@ -23,7 +23,7 @@ const WelcomeScreen = ({ children }) => {
       //Acá vamos a hacer la inicialización de vanta
 
       //Activo el efecto 'clouds'
-      setVanta(Clouds({
+      setVanta(Fog({
         THREE,
         el: myRefDiv.current
       }))// vanta != 0, es diferente de false

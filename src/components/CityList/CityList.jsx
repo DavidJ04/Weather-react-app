@@ -47,17 +47,15 @@ const renderCityAndCountry = eventOnClickCity => (CityAndCountry, weather) => {
 
 }
 
-//cities: es un array, y en cada item tiene que tener la ciudad y tambien el country
-//ul: tag html para listas no ordenadas
-const CityList = ({ cities, onClickCity }) => {
-
+//Hooks personalizados:
+const useCityList = (cities) => {
   /*
   AllWeather, estructura: [San Ramón-Costa Rica]: { temperature: 10, state: "sunny"}
    */
 
   //Elemento que va a manejar todos los climas de cada ciudad
   const [allWeather, setAllWeather] = useState({})
-  const [error, seterror] = useState(null)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     const setWeather = async (city, countryCode) => { //El async la convierte en un "promise"
@@ -79,12 +77,12 @@ const CityList = ({ cities, onClickCity }) => {
 
       } catch (error) {
         if (error.response) {  //Errores que nos responde el server
-          seterror("Ha ocurrido un error en el servidor del clima o con el internet")
+          setError("Ha ocurrido un error en el servidor del clima o con el internet")
         } else if (error.request) {  //Errores que suceden por no llegar al server
-          seterror("Verifique la conexión a internet")
+          setError("Verifique la conexión a internet")
         }
         else { //Errores imprevistos
-          seterror("Error al cargar los datos")
+          setError("Error al cargar los datos")
         }
       }
 
@@ -122,12 +120,20 @@ const CityList = ({ cities, onClickCity }) => {
 
   }, [cities])
 
+  return {allWeather, error, setError}
+
+}
+
+//cities: es un array, y en cada item tiene que tener la ciudad y tambien el country
+//ul: tag html para listas no ordenadas
+const CityList = ({ cities, onClickCity }) => {
+  const {allWeather, error, setError} = useCityList(cities)
   //const weather = { temperature: 10, state: "sunny" }
 
   return (
     <div>
       {
-        error && <Alert onClose={() => seterror(null)} severity="error">{error}</Alert>
+        error && <Alert onClose={() => setError(null)} severity="error">{error}</Alert>
       }
       <List>
         {
