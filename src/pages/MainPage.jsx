@@ -14,9 +14,11 @@ const cities = [
 const MainPage = () => {
     const navigate = useNavigate()
 
-    const onClickHandler = () => {
+    const onClickHandler = (city, countryCode) => {
       //Cual va a ser la nueva URL
-        navigate("/city")
+      console.log("city", city)
+      console.log("countryCode", countryCode)
+      navigate(`/city/${countryCode}/${city}`)
     }
 
   return (

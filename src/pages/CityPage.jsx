@@ -1,19 +1,21 @@
 import React from 'react'
 import CityInfo from '../components/CityInfo'
 import Weather from './../components/Weather'
+import { useParams } from 'react-router-dom'
 import WeatherDetails from '../components/WeatherDetails/WeatherDetails'
 import ForecastChart from '../components/ForecastChart'
 import Forecast from './../components/Forecast'
 import { Grid } from '@mui/material'
 import AppFrame from '../components/AppFrame'
 
+
 const forecastItemListExample = [
-  { hour: 18, state: "cloud", temperature: 17, weekDay: "Jueves" },
-  { hour: 7, state: "sunny", temperature: 18, weekDay: "Viernes" },
-  { hour: 12, state: "downpour", temperature: 18, weekDay: "Viernes" },
+  { hour: 18, state: "clouds", temperature: 17, weekDay: "Jueves" },
+  { hour: 7, state: "clear", temperature: 18, weekDay: "Viernes" },
+  { hour: 12, state: "drizzle", temperature: 18, weekDay: "Viernes" },
   { hour: 11, state: "snow", temperature: 19, weekDay: "Viernes" },
-  { hour: 6, state: "windy", temperature: 17, weekDay: "Sábado" },
-  { hour: 13, state: "sunny", temperature: 17, weekDay: "Sábado" }
+  { hour: 6, state: "rain", temperature: 17, weekDay: "Sábado" },
+  { hour: 13, state: "thunderstorm", temperature: 17, weekDay: "Sábado" }
 ]
 
 const dataExample = [
@@ -52,9 +54,14 @@ const dataExample = [
 
 
 const CityPage = () => {
+
+  const params = useParams()
+
+  console.log([params])
+
   const city = "San Ramón"
   const country = "Costa Rica"
-  const state = "sunny"
+  const state = "clear"
   const temperature = 20
   const humidity = 80
   const wind = 5
