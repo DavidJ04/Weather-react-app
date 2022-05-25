@@ -47,8 +47,6 @@ const renderCityAndCountry = eventOnClickCity => (CityAndCountry, weather) => {
 
 }
 
-
-
 //cities: es un array, y en cada item tiene que tener la ciudad y tambien el country
 //ul: tag html para listas no ordenadas
 const CityList = ({ cities, onClickCity }) => {

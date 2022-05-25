@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 //Convertir unidades
-import { getCityCode } from '../utils/utils'
-import convertUnits from 'convert-units'
+//import { getCityCode } from '../utils/utils'
+//import convertUnits from 'convert-units'
 import { getWeatherUrl } from '../utils/urls'
+import getAllWeather from '../utils/transform/getAllWeather'
 
 //Hooks personalizados:
 const useCityList = (cities) => {
@@ -24,14 +25,9 @@ const useCityList = (cities) => {
   
           const response = await axios.get(url)
   
-          const { data } = response
-          const temperature = Number(convertUnits(data.main.temp).from("K").to("C").toFixed(0))
-          //const stateFromServer = data.weather[0].main.toLowerCase()
-          const state = data.weather[0].main.toLowerCase()
-          const propName = getCityCode(city, countryCode)
-          const propValue = { temperature, state }
+          const allWeatherAux = getAllWeather(response, city, countryCode)
   
-          setAllWeather(allWeather => ({ ...allWeather, [propName]: propValue }))
+          setAllWeather(allWeather => ({ ...allWeather, ...allWeatherAux }))
   
         } catch (error) {
           if (error.response) {  //Errores que nos responde el server
