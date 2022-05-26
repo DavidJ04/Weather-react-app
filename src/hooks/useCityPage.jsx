@@ -1,11 +1,10 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useDebugValue} from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
-import moment from 'moment'
-import 'moment/locale/es'
 import { getForecastUrl } from '../utils/urls'
-import { toCelsius } from '../utils/utils'
+//import { toCelsius } from '../utils/utils'
 import getChartData from '../utils/transform/getChartData'
+import getForecastItemList from '../utils/transform/getForecastItemList'
 
 const useCityPage = () => {
     
@@ -15,6 +14,7 @@ const useCityPage = () => {
     //Toma los parametros que se estan enviando 
     const { city, countryCode } = useParams()
   
+    useDebugValue(`useCityPage ${city}`)
     useEffect( () => {
   
       const getForecast = async () => {
@@ -28,19 +28,7 @@ const useCityPage = () => {
   
           setData(dataAux)
   
-          //{ hour: 18, state: "clouds", temperature: 17, weekDay: "Jueves" }
-          const interval = [4, 8, 12, 16, 20, 24]
-  
-          const forecastItemListAux = data.list
-          .filter((item, index) => interval.includes(index))
-          .map(item => {
-              return ({
-                  hour: moment.unix(item.dt).hour(),
-                  weekDay: moment.unix(item.dt).format('dddd'),
-                  state: item.weather[0].main.toLowerCase(),
-                  temperature: toCelsius(item.main.temp)
-              })
-          })
+          const forecastItemListAux = getForecastItemList(data)
          
           setForecastItemList(forecastItemListAux)
   
@@ -52,9 +40,9 @@ const useCityPage = () => {
   
   getForecast()
   
-    }, [data, countryCode])
+    }, [city, data, countryCode])
   
-  return { city, data, forecastItemList}
+  return { city, countryCode, data, forecastItemList}
    
   }
 

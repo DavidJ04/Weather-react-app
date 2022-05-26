@@ -3,15 +3,9 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import AppFrame from './../components/AppFrame'
 import CityList from './../components/CityList'
+import { getCities } from '../utils/serviceCities'
 
-const cities = [
-  {city: "San Ramón", country: "Costa Rica", countryCode: "CR"},
-  {city: "Turrialba", country: "Costa Rica", countryCode: "CR"},
-  {city: "Alajuelita", country: "Costa Rica", countryCode: "CR"},
-  {city: "Desamparados", country: "Costa Rica", countryCode: "CR"},
-]
-
-const MainPage = () => {
+const MainPage = ({onSetAllWeather, allWeather}) => {
     const navigate = useNavigate()
 
     const onClickHandler = (city, countryCode) => {
@@ -23,7 +17,7 @@ const MainPage = () => {
 
   return (
     <AppFrame>
-         <CityList cities={cities} onClickCity={onClickHandler}/>
+        <CityList cities={getCities()} onClickCity={onClickHandler} allWeather={allWeather} onSetAllWeather={onSetAllWeather}/>
     </AppFrame>
   )
 }

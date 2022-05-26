@@ -1,5 +1,4 @@
 import React from 'react'
-import WelcomeScreen from '../components/WelcomeScreen/WelcomeScreen'
 import { Grid } from '@mui/material'
 import { IconContext } from 'react-icons'
 import { TiWeatherStormy } from 'react-icons/ti'

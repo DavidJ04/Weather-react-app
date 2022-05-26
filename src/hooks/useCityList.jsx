@@ -7,13 +7,13 @@ import { getWeatherUrl } from '../utils/urls'
 import getAllWeather from '../utils/transform/getAllWeather'
 
 //Hooks personalizados:
-const useCityList = (cities) => {
+const useCityList = (cities, onSetAllWeather) => {
     /*
     AllWeather, estructura: [San Ramón-Costa Rica]: { temperature: 10, state: "sunny"}
      */
   
     //Elemento que va a manejar todos los climas de cada ciudad
-    const [allWeather, setAllWeather] = useState({})
+    //const [allWeather, onSetAllWeather] = useState({})
     const [error, setError] = useState(null)
   
     useEffect(() => {
@@ -27,7 +27,8 @@ const useCityList = (cities) => {
   
           const allWeatherAux = getAllWeather(response, city, countryCode)
   
-          setAllWeather(allWeather => ({ ...allWeather, ...allWeatherAux }))
+          //setAllWeather(allWeather => ({ ...allWeather, ...allWeatherAux }))
+          onSetAllWeather(allWeatherAux)
   
         } catch (error) {
           if (error.response) {  //Errores que nos responde el server
@@ -72,9 +73,9 @@ const useCityList = (cities) => {
         setWeather(city, countryCode)
       });
   
-    }, [cities])
+    }, [cities, onSetAllWeather])
   
-    return {allWeather, error, setError}
+    return {error, setError}
   
   }
 

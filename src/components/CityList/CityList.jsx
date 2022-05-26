@@ -33,7 +33,6 @@ const renderCityAndCountry = eventOnClickCity => (CityAndCountry, weather) => {
         <Grid item
           md={3}
           xs={12}>
-
           {                            //Verifica si viene indefinido
             <Weather temperature={weather && weather.temperature} state={weather && weather.state} />
           }
@@ -49,8 +48,8 @@ const renderCityAndCountry = eventOnClickCity => (CityAndCountry, weather) => {
 
 //cities: es un array, y en cada item tiene que tener la ciudad y tambien el country
 //ul: tag html para listas no ordenadas
-const CityList = ({ cities, onClickCity }) => {
-  const {allWeather, error, setError} = useCityList(cities)
+const CityList = ({ cities, onClickCity, onSetAllWeather, allWeather }) => {
+  const {error, setError} = useCityList(cities, onSetAllWeather)
   //const weather = { temperature: 10, state: "sunny" }
 
   return (
