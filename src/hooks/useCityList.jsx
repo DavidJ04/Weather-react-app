@@ -5,9 +5,10 @@ import axios from 'axios'
 //import convertUnits from 'convert-units'
 import { getWeatherUrl } from '../utils/urls'
 import getAllWeather from '../utils/transform/getAllWeather'
+import { getCityCode } from '../utils/utils'
 
 //Hooks personalizados:
-const useCityList = (cities, onSetAllWeather) => {
+const useCityList = (cities, allWeather, onSetAllWeather) => {
     /*
     AllWeather, estructura: [San Ramón-Costa Rica]: { temperature: 10, state: "sunny"}
      */
@@ -22,7 +23,10 @@ const useCityList = (cities, onSetAllWeather) => {
         const url = getWeatherUrl({city, countryCode}) 
 
         try {
-  
+          //Permite que solo haga una peticion una vez
+          const propName = getCityCode(city, countryCode)
+          onSetAllWeather({[propName]: {} })
+
           const response = await axios.get(url)
   
           const allWeatherAux = getAllWeather(response, city, countryCode)
@@ -70,10 +74,13 @@ const useCityList = (cities, onSetAllWeather) => {
   
   
       cities.forEach(({ city, countryCode }) => {
+        if(!allWeather[getCityCode(city, countryCode)]) 
+        {
         setWeather(city, countryCode)
+        }
       });
   
-    }, [cities, onSetAllWeather])
+    }, [cities, onSetAllWeather, allWeather]) 
   
     return {error, setError}
   

@@ -17,16 +17,24 @@ import { getCountryNameByCountryCode } from '../utils/serviceCities'
 //Permite establecer el idioma en español
 import 'moment/locale/es'
 
-const CityPage = ({onSetAllWeather, allWeather}) => {
+const CityPage = ({actions, dataMe}) => {
 
-    const { city ,countryCode, data, forecastItemList} = useCityPage()
+    const { allWeather, allData, allForecastItemList } = dataMe
+    const { onSetAllWeather, onSetData, onSetForecastItemList } = actions
+    
+    const { city, countryCode} = useCityPage(allData, allForecastItemList, onSetData, onSetForecastItemList)
 
     //Cuando cambie city y countrycode; va a retornar una nueva instancia del objeto, osea no siempre, solo cuando cambien.
     const cities = useMemo(() => ([{ city, countryCode }]), [city, countryCode])
+    //const cities = useCallback((city, countryCode) => { onSetAllWeather((city, countryCode ) => [ city, countryCode ])} , [city, countryCode])
 
-    useCityList(cities, onSetAllWeather)
+    useCityList(cities, allWeather, onSetAllWeather)
 
-    const weather = allWeather[getCityCode(city, countryCode)]
+    const cityCode = getCityCode(city, countryCode)
+
+    const weather = allWeather[cityCode]
+    const data = allData[cityCode]
+    const forecastItemList = allForecastItemList[cityCode]
 
     const country = countryCode && getCountryNameByCountryCode(countryCode)
     const humidity = weather && weather.humidity
