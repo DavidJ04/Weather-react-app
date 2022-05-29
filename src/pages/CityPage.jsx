@@ -13,22 +13,26 @@ import useCityPage from '../hooks/useCityPage'
 import useCityList from '../hooks/useCityList'
 import { getCityCode } from '../utils/utils'
 import { getCountryNameByCountryCode } from '../utils/serviceCities'
+import {useWeatherDispatchContext, useWeatherStateContext} from '../WeatherContext'
 
 //Permite establecer el idioma en español
 import 'moment/locale/es'
 
-const CityPage = ({actions, dataMe}) => {
+const CityPage = () => {
+
+    const actions = useWeatherDispatchContext()
+    const dataMe = useWeatherStateContext()  
 
     const { allWeather, allData, allForecastItemList } = dataMe
-    const { onSetAllWeather, onSetData, onSetForecastItemList } = actions
+    //const { onSetAllWeather, onSetData, onSetForecastItemList } = actions
     
-    const { city, countryCode} = useCityPage(allData, allForecastItemList, onSetData, onSetForecastItemList)
+    const { city, countryCode} = useCityPage(allData, allForecastItemList, actions)
 
     //Cuando cambie city y countrycode; va a retornar una nueva instancia del objeto, osea no siempre, solo cuando cambien.
     const cities = useMemo(() => ([{ city, countryCode }]), [city, countryCode])
     //const cities = useCallback((city, countryCode) => { onSetAllWeather((city, countryCode ) => [ city, countryCode ])} , [city, countryCode])
 
-    useCityList(cities, allWeather, onSetAllWeather)
+    useCityList(cities, allWeather, actions)
 
     const cityCode = getCityCode(city, countryCode)
 

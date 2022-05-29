@@ -1,23 +1,32 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Grid, ListItem, List, Alert } from '@mui/material'
-
 //Usa el hook que se creo en UseCityList(se llama igual que el hook)
 import useCityList from '../../hooks/useCityList'
-
 import CityInfo from './../CityInfo'
 import Weather from './../Weather'
-
 import { getCityCode } from '../../utils/utils'
+import { useWeatherDispatchContext, useWeatherStateContext} from '../../WeatherContext'
 
-//li: item de una lista
-//renderCityAndCountry se va a convertir en una función que retorna otra función
-const renderCityAndCountry = eventOnClickCity => (CityAndCountry, weather) => {
-  const { city, countryCode ,country } = CityAndCountry
-  //  const { temperature, state} = weather
+/*
+const areEqual = (prev, next) => {
+      debugger
+      //Hace una comparacion de ambos estados y verifica los cambios en la renderización
+      console.log("city", prev.city === next.cities)
+      console.log("countryCode", prev.countryCode === next.countryCode)
+      console.log("country", prev.country === next.country)
+      console.log("weather", prev.weather === next.weather)
+      console.log("eventOnClickCity", prev.eventOnClickCity === next.eventOnClickCity)
+
+      return false
+
+}
+*/
+
+const CityListItem = React.memo(({city, countryCode ,country, weather, eventOnClickCity }) => {
 
   return (
-    <ListItem button key={getCityCode(city, countryCode)} onClick={() => eventOnClickCity(city, countryCode)}>
+    <ListItem button onClick={() => eventOnClickCity(city, countryCode)}>
 
       <Grid container
         justifyContent="center"
@@ -41,19 +50,33 @@ const renderCityAndCountry = eventOnClickCity => (CityAndCountry, weather) => {
       </Grid>
 
     </ListItem>
-
   )
+}//, areEqual
+)
+
+CityListItem.displayName = "CityListItem"
+
+//li: item de una lista
+//renderCityAndCountry se va a convertir en una función que retorna otra función
+const renderCityAndCountry = eventOnClickCity => (CityAndCountry, weather) => {
+  const { city, countryCode } = CityAndCountry
+  //  const { temperature, state} = weather
+
+ return <CityListItem key={getCityCode(city, countryCode)} eventOnClickCity={eventOnClickCity} weather={weather} {...CityAndCountry}/>
 
 }
 
 //cities: es un array, y en cada item tiene que tener la ciudad y tambien el country
 //ul: tag html para listas no ordenadas
-const CityList = ({ cities, onClickCity, actions, dataMe }) => {
+const CityList = ({ cities, onClickCity }) => {
+
+  const actions = useWeatherDispatchContext()
+  const dataMe = useWeatherStateContext()  
 
   const { allWeather } = dataMe
-  const { onSetAllWeather } = actions
+  //const { onSetAllWeather } = actions
   
-  const {error, setError} = useCityList(cities, allWeather, onSetAllWeather)
+  const {error, setError} = useCityList(cities, allWeather,  actions)
   //const weather = { temperature: 10, state: "sunny" }
 
   return (
@@ -76,4 +99,6 @@ CityList.propTypes = {
   onClickCity: PropTypes.func.isRequired
 }
 
-export default CityList
+//CityList.displayName = "CitySuperList"
+
+export default React.memo(CityList)

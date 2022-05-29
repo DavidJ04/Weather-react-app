@@ -8,7 +8,7 @@ import getAllWeather from '../utils/transform/getAllWeather'
 import { getCityCode } from '../utils/utils'
 
 //Hooks personalizados:
-const useCityList = (cities, allWeather, onSetAllWeather) => {
+const useCityList = (cities, allWeather, actions) => {
     /*
     AllWeather, estructura: [San Ramón-Costa Rica]: { temperature: 10, state: "sunny"}
      */
@@ -25,15 +25,18 @@ const useCityList = (cities, allWeather, onSetAllWeather) => {
         try {
           //Permite que solo haga una peticion una vez
           const propName = getCityCode(city, countryCode)
-          onSetAllWeather({[propName]: {} })
+          //onSetAllWeather({[propName]: {} })
+          actions({type: 'SET_ALL_WEATHER', payload: {[propName]: {} }})
 
           const response = await axios.get(url)
   
           const allWeatherAux = getAllWeather(response, city, countryCode)
   
           //setAllWeather(allWeather => ({ ...allWeather, ...allWeatherAux }))
-          onSetAllWeather(allWeatherAux)
-  
+
+          //onSetAllWeather(allWeatherAux)
+          actions({type: 'SET_ALL_WEATHER', payload: allWeatherAux})
+
         } catch (error) {
           if (error.response) {  //Errores que nos responde el server
             setError("Ha ocurrido un error en el servidor del clima o con el internet")
@@ -80,7 +83,7 @@ const useCityList = (cities, allWeather, onSetAllWeather) => {
         }
       });
   
-    }, [cities, onSetAllWeather, allWeather]) 
+    }, [cities, actions, allWeather]) 
   
     return {error, setError}
   

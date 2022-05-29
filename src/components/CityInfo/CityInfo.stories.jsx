@@ -4,7 +4,13 @@ import 'typeface-roboto'
 
 export default {
     title: "CityInfo",
-    component:  CityInfo
+    component:  CityInfo,
+        argTypes: {
+            city: { control : { type:'text'}},
+            city: { control : { type:'text'}}
+        }
 }
 
-export const CityExample = () => <CityInfo city={"Alajuela"} country={"Costa Rica"}></CityInfo>         
+export const CityExample = (args) => (<CityInfo {...args} ></CityInfo>)         
+
+CityExample.args = {city:"Alajuela", country:"Costa Rica"}

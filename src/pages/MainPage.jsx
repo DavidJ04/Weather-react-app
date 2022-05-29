@@ -5,19 +5,17 @@ import AppFrame from './../components/AppFrame'
 import CityList from './../components/CityList'
 import { getCities } from '../utils/serviceCities'
 
-const MainPage = ({actions, dataMe}) => {
+const MainPage = ({}) => {
     const navigate = useNavigate()
 
-    const onClickHandler = (city, countryCode) => {
+    const onClickHandler = React.useCallback((city, countryCode) => {
       //Cual va a ser la nueva URL
-      console.log("city", city)
-      console.log("countryCode", countryCode)
       navigate(`/city/${countryCode}/${city}`)
-    }
+    }, [navigate])
 
   return (
     <AppFrame>
-        <CityList dataMe={dataMe} actions={actions} cities={getCities()} onClickCity={onClickHandler}/>
+        <CityList cities={getCities()} onClickCity={onClickHandler}/>
     </AppFrame>
   )
 }

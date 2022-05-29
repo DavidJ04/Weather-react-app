@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useMemo} from 'react'
 import PropTypes from 'prop-types'
 import { Typography, Skeleton } from '@mui/material'
 import {IconContext} from 'react-icons'
@@ -7,9 +7,10 @@ import { Grid } from '@mui/material'
 import IconState, {validValues} from './../IconState'
 
 const Weather = ({temperature, state}) => {
+  const iconContextSize = useMemo(() => ({size: '4em'}), [])
   return (
     <Grid container item direction="row" justifyContent="center" alignItems="center">
-        <IconContext.Provider value={{size: '4em'}}>
+        <IconContext.Provider value={iconContextSize}>
               {
               //Si viene indefinido o no.
               state ?
